@@ -20,6 +20,14 @@ function updateStyles() {
 
 }
 
+function html_to_string(ihtml) {
+    return ihtml.replace("%20", " ");
+}
+
+function string_to_html(str) {
+    return str.replace(" ", "%20");
+}
+
 function getCCProtocolData() {
     updateStyles();
 
@@ -28,10 +36,12 @@ function getCCProtocolData() {
       });
 
     var ajaxreq = new XMLHttpRequest();
-    var chain = params.chain;
-    var name = params.name;
+    var chain = html_to_string(params.chain);
+    var name = html_to_string(params.name);
+
     
-    var protocol_html = `https://fast-dawn-89938.herokuapp.com/https://ccbackendapi.herokuapp.com/api/protocol/chain=${chain}&name=${name}`;
+    
+    var protocol_html = `https://fast-dawn-89938.herokuapp.com/https://ccbackendapi.herokuapp.com/api/protocol/chain=${string_to_html(chain)}&name=${string_to_html(name)}`;
 
       
     ajaxreq.onreadystatechange = function() {
