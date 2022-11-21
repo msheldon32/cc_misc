@@ -2,17 +2,17 @@
 <script src="https://ccmisc.herokuapp.com/widget.js"></script>
 <body onload="getCCProtocolData()">
 <div id="cc_review_body" class="cc_review_body" onclick="navigateToProtocol()">
-    <img class="cc_logo" src="DefaultIcon.png" />
+    <img class="cc_logo" src="DefaultIcon.png" onclick="navigateToProtocol()" />
     <p style="font-size: 1;"><br /></p>
-    <div id="review_name" class="cc_review_text">
+    <div id="review_name" class="cc_review_text" onclick="navigateToProtocol()">
         Loading reviews...
     </div>
         
-    <div class="cc_stars">
+    <div class="cc_stars" onclick="navigateToProtocol()">
         <span id="cc_star_span" style="display: inline"></span>  <span id="cc_nreviews" class="cc_text_inline"></span>
     </div>
     <p style="font-size: 3;"><br /></p>
-    <div class="cc_disclaimer">
+    <div class="cc_disclaimer" onclick="navigateToProtocol()">
         Powered by CipherCritic
     </div>
 </div>
