@@ -1,0 +1,138 @@
+<html>
+<head>
+    <script>
+        var relevantElements = [];
+        function updateStyles() {
+            var head = document.head;
+            anaheimLink = document.createElement("link");
+
+            anaheimLink.type = "text/css";
+            anaheimLink.rel = "stylesheet";
+            anaheimLink.href = "https://fonts.googleapis.com/css2?family=Anaheim&display=swap";
+
+            head.appendChild(anaheimLink);
+        }
+        
+        function getCCProtocolData() {
+            updateStyles();
+
+            relevantElements = document.getElementsByClassName("cc_review_body");
+            console.log("get protocol data...")
+            for (var i = 0; i < relevantElements.length; i++) {
+                var ajaxreq = new XMLHttpRequest();
+                var chain = relevantElements[i].getAttribute("protocol_chain");
+                var name = relevantElements[i].getAttribute("protocol_name");
+                var protocol_html = `https://fast-dawn-89938.herokuapp.com/https://ccbackendapi.herokuapp.com/api/protocol/chain=${chain}&name=${name}`;
+                
+                ajaxreq.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log("request came...");
+                        var json_res = JSON.parse(this.responseText);
+                        for (var i = 0; i < relevantElements.length; i++) {
+                            if (relevantElements[i].getAttribute("protocol_chain") == json_res["chain"] &&
+                                relevantElements[i].getAttribute("protocol_name")  == json_res["name"]) {
+                                    
+                                relevantElements[i].querySelector("#cc_star_span").innerHTML = "";
+                                var rating = Math.round(json_res["details"]["overall_rating"]);
+                                
+                                for (var star_i = 0; star_i < rating; star_i += 1) {
+                                    relevantElements[i].querySelector("#cc_star_span").innerHTML += "&#x2605;";
+                                }
+                                for (var star_i = rating; star_i < 5; star_i += 1) {
+                                    relevantElements[i].querySelector("#cc_star_span").innerHTML += "&#x2606;";
+                                }
+                                relevantElements[i].querySelector("#cc_nreviews").innerHTML = `(${json_res["details"]["number_of_reviews"]})`;
+                                relevantElements[i].querySelector("#cc_nreviews").innerHTML = `(${json_res["details"]["number_of_reviews"]})`;
+                                relevantElements[i].querySelector("#review_name").innerHTML = json_res["name"]
+                            }
+                        }
+                    }
+                }
+
+                ajaxreq.open("GET", protocol_html);
+                ajaxreq.send();
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --blue: #8080D7;
+            --purple: #754476;
+            --white: #FDF8F8;
+            --black: #000000;
+            --border-gray: #444444;
+            --trans-gray: rgba(64, 64 ,64, 0.3);
+            --trans-white: rgba(128, 128 ,128, 0.4);
+            --trans-blue: rgba(64, 64 ,128, 0.1);
+            --star-yellow: #faaf00;
+
+            --border-radius: 15px;
+            --border-radius-large: 25px;
+        }
+        .cc_review_body {
+            box-shadow: none;
+            align-items: center;
+            justify-content: center;
+            max-width: 100%;
+            max-height: 100%;
+            width: 225px;
+            height: 125px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .cc_review_text {
+            font-family: anaheim;
+            font-style: normal;
+            font-weight: 400px;
+            font-size: 24px;
+            color: var(--black);
+        }
+        .cc_stars {
+            font-family: anaheim;
+            font-style: normal;
+            font-weight: 400px;
+            font-size: 18px;
+            color: var(--star-yellow);
+        }
+        .cc_logo {
+            width: 15%;
+        }
+        .cc_disclaimer {
+            font-family: anaheim;
+            font-style: normal;
+            font-weight: 400px;
+            font-size: 12px;
+            color: var(--black);
+        }
+        .cc_text_inline {
+            font-family: anaheim;
+            font-style: normal;
+            font-weight: 400px;
+            font-size: 18px;
+            color: var(--black);
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+<iframe onload="getCCProtocolData()">
+</iframe>
+<div class="cc_review_body" onload="getCCProtocolData()" protocol_chain="polygon" protocol_name="Curve">
+    <img class="cc_logo" src="DefaultIcon.png" />
+    <p style="font-size: 1;"><br /></p>
+    <div id="review_name" class="cc_review_text">
+        Loading reviews...
+    </div>
+        
+    <div class="cc_stars">
+        <span id="cc_star_span" style="display: inline"></span>  <span id="cc_nreviews" class="cc_text_inline"></span>
+    </div>
+    <p style="font-size: 3;"><br /></p>
+    <div class="cc_disclaimer">
+        Powered by CipherCritic
+    </div>
+</div>
+</body>
+</html>
