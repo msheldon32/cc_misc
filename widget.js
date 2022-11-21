@@ -16,11 +16,11 @@ function getCCProtocolData() {
     updateStyles();
 
     relevantElements = document.getElementsByClassName("cc_review_body");
-    console.log("get protocol data...")
+    console.log("get protocol data...");
     for (var i = 0; i < relevantElements.length; i++) {
         var ajaxreq = new XMLHttpRequest();
-        var chain = relevantElements[i].parent.getAttribute("protocol_chain");
-        var name = relevantElements[i].parent.getAttribute("protocol_name");
+        var chain = relevantElements[i].parentElement.getAttribute("protocol_chain");
+        var name = relevantElements[i].parentElement.getAttribute("protocol_name");
         var protocol_html = `https://fast-dawn-89938.herokuapp.com/https://ccbackendapi.herokuapp.com/api/protocol/chain=${chain}&name=${name}`;
         
         ajaxreq.onreadystatechange = function() {
@@ -28,8 +28,8 @@ function getCCProtocolData() {
                 console.log("request came...");
                 var json_res = JSON.parse(this.responseText);
                 for (var i = 0; i < relevantElements.length; i++) {
-                    if (relevantElements[i].parent.getAttribute("protocol_chain") == json_res["chain"] &&
-                        relevantElements[i].parent.getAttribute("protocol_name")  == json_res["name"]) {
+                    if (relevantElements[i].parentElement.getAttribute("protocol_chain") == json_res["chain"] &&
+                        relevantElements[i].parentElement.getAttribute("protocol_name")  == json_res["name"]) {
                             
                         relevantElements[i].querySelector("#cc_star_span").innerHTML = "";
                         var rating = Math.round(json_res["details"]["overall_rating"]);
