@@ -20,6 +20,17 @@ function updateStyles() {
 
 }
 
+function navigateToProtocol() {
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+      });
+
+      
+    var chain = html_to_string(params.chain);
+    var name = html_to_string(params.name);
+    window.location.href = `https://ccfrontend.herokuapp.com/#/protocol/${string_to_html(name)}/${string_to_html(chain)}`
+}
+
 function html_to_string(ihtml) {
     return ihtml.replace("%20", " ");
 }
