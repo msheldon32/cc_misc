@@ -1,13 +1,22 @@
+
 var relevantElements = [];
 function updateStyles() {
     var head = document.head;
-    anaheimLink = document.createElement("link");
+    var anaheimLink = document.createElement("link");
 
     anaheimLink.type = "text/css";
     anaheimLink.rel = "stylesheet";
     anaheimLink.href = "https://fonts.googleapis.com/css2?family=Anaheim&display=swap";
 
     head.appendChild(anaheimLink);
+    
+    var styleLink = document.createElement("link");
+
+    styleLink.type = "text/css";
+    styleLink.rel = "stylesheet";
+    styleLink.href = "https://ccmisc.herokuapp.com/widget.css";
+
+    head.appendChild(styleLink);
 
 
 }
