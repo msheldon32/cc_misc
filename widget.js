@@ -32,11 +32,11 @@ function navigateToProtocol() {
 }
 
 function html_to_string(ihtml) {
-    return ihtml.replace("%20", " ");
+    return ihtml;
 }
 
 function string_to_html(str) {
-    return str.replace(" ", "%20");
+    return str;
 }
 
 function getCCProtocolData() {
@@ -50,9 +50,13 @@ function getCCProtocolData() {
     var chain = html_to_string(params.chain);
     var name = html_to_string(params.name);
 
+    console.log(`chain: ${chain}, name: ${name}`)
+
     
     
     var protocol_html = `https://fast-dawn-89938.herokuapp.com/https://ccbackendapi.herokuapp.com/api/protocol/chain=${string_to_html(chain)}&name=${string_to_html(name)}`;
+
+    console.log(`protocol html: ${protocol_html}`)
 
       
     ajaxreq.onreadystatechange = function() {
