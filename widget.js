@@ -54,7 +54,7 @@ function getCCProtocolData() {
 
     
     
-    var protocol_html = `https://fast-dawn-89938.herokuapp.com/https://ccbackendapi.herokuapp.com/api/protocol/chain=${string_to_html(chain)}&name=${string_to_html(name)}`;
+    var protocol_html = `https://ccbackendapi.herokuapp.com/api/protocol/chain=${string_to_html(chain)}&name=${string_to_html(name)}`;
 
     console.log(`protocol html: ${protocol_html}`)
 
